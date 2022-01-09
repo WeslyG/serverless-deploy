@@ -13,6 +13,7 @@ import {
   Tag,
   Divider,
   message,
+  Empty,
 } from 'antd';
 import {
   LikeOutlined,
@@ -21,9 +22,11 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 
-import Editor from '@monaco-editor/react';
 import 'antd/dist/antd.css';
 import { Header } from './components/header/Header';
+import { CodeEditor } from './components/editor/Editor';
+import { DeployButtons } from './components/deploy/DeployButtons';
+import { EditButtons } from './components/edit/EditButton';
 
 export function App(): JSX.Element {
   const listData = [
@@ -38,108 +41,207 @@ export function App(): JSX.Element {
       href: 'https://ant.design',
       title: `ReportBuilder.ts`,
       tags: ['report', 'unique'],
+      code: `
+        @Get()
+        getAll() {
+          return this.fnService.getAllFn();
+        }
+      `,
     },
     {
       id: 3,
       href: 'https://ant.design',
       title: `TestDownloadCSV.cpp`,
       tags: ['csv', 'js', 'test'],
+      code: `
+        @Put(':id')
+        updateFn(@Param() id: string, @Body() body: any) {
+          return this.fnService.updateFn(id, body);
+        }`,
     },
     {
       id: 4,
       href: 'https://ant.design',
       title: `TestReportAdapter.ts`,
       tags: ['report', 'ts', 'test'],
+      code: `
+        @Get()
+        getAll() {
+          return this.fnService.getAllFn();
+        }
+      `,
     },
     {
       id: 5,
       href: 'https://ant.design',
       title: `ParseHTMLSource.ts`,
       tags: ['HTML', 'ts', 'parser'],
+      code: `
+        @Put(':id')
+        updateFn(@Param() id: string, @Body() body: any) {
+          return this.fnService.updateFn(id, body);
+        }`,
     },
     {
       id: 6,
       href: 'https://ant.design',
       title: `GetEveryCount.ts`,
       tags: ['count', 'ts'],
+      code: `
+        @Get()
+        getAll() {
+          return this.fnService.getAllFn();
+        }
+      `,
     },
     {
       id: 7,
       href: 'https://ant.design',
       title: `SimulateUploadCount.ts`,
       tags: ['count', 'ts', 'upload'],
+      code: `
+        @Put(':id')
+        updateFn(@Param() id: string, @Body() body: any) {
+          return this.fnService.updateFn(id, body);
+        }`,
     },
     {
       id: 8,
       href: 'https://ant.design',
       title: `AdapterUserScoreTest.ts`,
       tags: ['adapter', 'ts', 'test'],
+      code: `
+        @Get()
+        getAll() {
+          return this.fnService.getAllFn();
+        }
+      `,
     },
     {
       id: 9,
       href: 'https://ant.design',
       title: `AdapterReportCsvCounterData.js`,
       tags: ['adapter', 'js', 'test'],
+      code: `
+        @Put(':id')
+        updateFn(@Param() id: string, @Body() body: any) {
+          return this.fnService.updateFn(id, body);
+        }`,
     },
     {
       id: 10,
       href: 'https://ant.design',
       title: `TestUserRating.ts`,
       tags: ['adapter', 'js'],
+      code: `
+        @Get()
+        getAll() {
+          return this.fnService.getAllFn();
+        }
+      `,
     },
     {
       id: 11,
       href: 'https://ant.design',
       title: `IntegrationDtoDescription.ts`,
       tags: ['js'],
+      code: `
+        @Put(':id')
+        updateFn(@Param() id: string, @Body() body: any) {
+          return this.fnService.updateFn(id, body);
+        }`,
     },
     {
       id: 12,
       href: 'https://ant.design',
       title: `ScoreCsvCounter.ts`,
       tags: ['user', 'test'],
+      code: `
+        @Get()
+        getAll() {
+          return this.fnService.getAllFn();
+        }
+      `,
     },
     {
       id: 13,
       href: 'https://ant.design',
       title: `AnswerUsersCount.ts`,
       tags: ['user', 'js'],
+      code: `
+        @Put(':id')
+        updateFn(@Param() id: string, @Body() body: any) {
+          return this.fnService.updateFn(id, body);
+        }`,
     },
     {
       id: 14,
       href: 'https://ant.design',
       title: `UsersFriendsCount.ts`,
       tags: ['adapter', 'ts'],
+      code: `
+        @Put(':id')
+        updateFn(@Param() id: string, @Body() body: any) {
+          return this.fnService.updateFn(id, body);
+        }`,
     },
     {
       id: 15,
       href: 'https://ant.design',
       title: `UsersFunctionsDtoCount.ts`,
       tags: ['test'],
+      code: `
+        @Get()
+        getAll() {
+          return this.fnService.getAllFn();
+        }
+      `,
     },
     {
       id: 16,
       href: 'https://ant.design',
       title: `Main.ts`,
       tags: ['js'],
+      code: `
+        @Put(':id')
+        updateFn(@Param() id: string, @Body() body: any) {
+          return this.fnService.updateFn(id, body);
+        }`,
     },
     {
       id: 17,
       href: 'https://ant.design',
       title: `CreateNewDtoUser.ts`,
       tags: ['user'],
+      code: `
+        @Get()
+        getAll() {
+          return this.fnService.getAllFn();
+        }
+      `,
     },
     {
       id: 18,
       href: 'https://ant.design',
       title: `CreateUserFriend.ts`,
       tags: ['adapter'],
+      code: `
+        @Put(':id')
+        updateFn(@Param() id: string, @Body() body: any) {
+          return this.fnService.updateFn(id, body);
+        }`,
     },
     {
       id: 19,
       href: 'https://ant.design',
       title: `CreateDataFactory.ts`,
       tags: ['test'],
+      code: `
+        @Get()
+        getAll() {
+          return this.fnService.getAllFn();
+        }
+      `,
     },
   ];
 
@@ -157,90 +259,38 @@ export function App(): JSX.Element {
           x.tags.filter((a) => a.toLowerCase().includes(data.toLowerCase()))
             .length > 0,
       );
-      console.log(res);
       setListDataFiltered(res);
     }
   };
 
-  function choose(choices) {
-    const index = Math.floor(Math.random() * choices.length);
-    return choices[index];
+  function choose(name: string) {
+    let count = 0;
+    for (let i = 0; i < name.length; i++) {
+      count += name.charCodeAt(i);
+    }
+    const index = Math.floor(count / 148);
+    return colors[index];
   }
 
-  const colors = ['green', 'red', 'cyan', 'blue', 'magenta', 'geekblue'];
+  const colors = ['green', 'blue', 'red', 'cyan', 'magenta', 'geekblue'];
 
+  // For editor
   const [isEditorReady, setIsEditorReady] = React.useState(false);
   const valueGetter = React.useRef();
   function handleEditorDidMount(_valueGetter) {
     setIsEditorReady(true);
     valueGetter.current = _valueGetter;
   }
-  const code2 = `
-    function helloWorld() {
-      console.log('hello world');
-    }
-  `;
 
-  const [code, setCode] = React.useState(`
-    export class FunctionController {
-    constructor(private readonly fnService: FunctionService) {}
+  const [code, setCode] = React.useState('');
+  const [fileName, setFileName] = React.useState('');
 
-    @Get()
-    getAll() {
-      return this.fnService.getAllFn();
-    }
-
-    @Get(':id')
-    getOne(@Param() id: string) {
-      return this.fnService.getOneFn(id);
-    }
-
-    @Post()
-    createFn(@Body() body: any) {
-      return this.fnService.createFn(body);
-    }
-
-    @Put(':id')
-    updateFn(@Param() id: string, @Body() body: any) {
-      return this.fnService.updateFn(id, body);
-    }
-
-    @Delete(':id')
-    deleteFn(@Param() id: string) {
-      return this.fnService.deleteFn(id);
-    }
-
-    @Post()
-    createFn(@Body() body: any) {
-      return this.fnService.createFn(body);
-    }
-
-    @Put(':id')
-    updateFn(@Param() id: string, @Body() body: any) {
-      return this.fnService.updateFn(id, body);
-    }
-
-    @Delete(':id')
-    deleteFn(@Param() id: string) {
-      return this.fnService.deleteFn(id);
-    }
-  }`);
+  const linkHandle = (event) => {
+    setFileName(event.title);
+    setCode(event.code);
+  };
 
   // TODO: Менять содержимое функций от ввода (правильные ref)
-  // TODO: Добавить создание новой функции
-  // TODO: Поиск по тегам
-
-  const success = () => {
-    message.success('Success deploy!');
-  };
-
-  const error = () => {
-    message.error('On deploy has errors, please see console for detail');
-  };
-
-  const [isLoading3, setIsLoading3] = React.useState(false);
-  const [isLoading1, setIsLoading1] = React.useState(false);
-  const [isLoading2, setIsLoading2] = React.useState(false);
 
   return (
     <div className="App">
@@ -255,18 +305,21 @@ export function App(): JSX.Element {
               </Divider>
             }
             pagination={{
-              onChange: (page) => {
-                console.log(page);
-              },
-              pageSize: 15,
+              pageSize: 13,
             }}
             bordered
             dataSource={listDataFiltered}
             renderItem={(item) => (
               <List.Item key={item.id}>
-                <List.Item.Meta title={<a href={item.href}>{item.title}</a>} />
+                <List.Item.Meta
+                  title={
+                    <Button type="link" onClick={() => linkHandle(item)}>
+                      {item.title}
+                    </Button>
+                  }
+                />
                 {item.tags.map((x) => {
-                  return <Tag color={choose(colors)}>{x}</Tag>;
+                  return <Tag color={choose(x)}>{x}</Tag>;
                 })}
               </List.Item>
             )}
@@ -274,57 +327,28 @@ export function App(): JSX.Element {
         </Col>
 
         <Col span={15}>
-          <h3 style={{ marginLeft: '2em' }}>ReportBuilder.ts</h3>
-          <Editor
-            height="80vh"
-            language="typescript"
-            value={code}
-            editorDidMount={handleEditorDidMount}
-          />
-          <div className="deploy-buttons-group" style={{ margin: '10px' }}>
-            <Button
-              style={{ margin: '10px' }}
-              type="primary"
-              loading={isLoading1}
-              onClick={() => {
-                setIsLoading1(true);
-                setTimeout(() => {
-                  setIsLoading1(false);
-                  success();
-                }, 300);
-              }}
-            >
-              Deploy to YandeCloud
-            </Button>
-            <Button
-              style={{ margin: '10px' }}
-              type="primary"
-              loading={isLoading2}
-              onClick={() => {
-                setIsLoading2(true);
-                setTimeout(() => {
-                  setIsLoading2(false);
-                  success();
-                }, 900);
-              }}
-            >
-              Deploy to SberCloud
-            </Button>
-            <Button
-              style={{ margin: '10px' }}
-              type="primary"
-              loading={isLoading3}
-              onClick={() => {
-                setIsLoading3(true);
-                setTimeout(() => {
-                  setIsLoading3(false);
-                  error();
-                }, 1500);
-              }}
-            >
-              Deploy to Selectel
-            </Button>
-          </div>
+          {fileName === '' ? (
+            <Row justify="center" align="middle" style={{ height: '70vh' }}>
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={<span>Выберите функцию из списка слева</span>}
+              />
+            </Row>
+          ) : (
+            <CodeEditor
+              name={fileName}
+              code={code}
+              editorHandler={handleEditorDidMount}
+            />
+          )}
+          {fileName === '' ? (
+            <></>
+          ) : (
+            <div>
+              <EditButtons />
+              <DeployButtons />
+            </div>
+          )}
         </Col>
       </Row>
     </div>
