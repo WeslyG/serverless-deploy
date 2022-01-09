@@ -32,14 +32,13 @@ export function App(): JSX.Element {
   const listData = [
     // {
     //   id: 1,
-    //   href: 'https://ant.design',
     //   title: `VeryVeeeeryLongFunctionNameAsExampleForJavaFunctionNamesAndTestMyUiExperience.js`,
     //   tags: ['user', 'js', 'test'],
     // },
     {
       id: 2,
-      href: 'https://ant.design',
       title: `ReportBuilder.ts`,
+      language: 'typescript',
       tags: ['report', 'unique'],
       code: `
         @Get()
@@ -50,9 +49,9 @@ export function App(): JSX.Element {
     },
     {
       id: 3,
-      href: 'https://ant.design',
       title: `TestDownloadCSV.cpp`,
       tags: ['csv', 'js', 'test'],
+      language: 'typescript',
       code: `
         @Put(':id')
         updateFn(@Param() id: string, @Body() body: any) {
@@ -61,8 +60,8 @@ export function App(): JSX.Element {
     },
     {
       id: 4,
-      href: 'https://ant.design',
       title: `TestReportAdapter.ts`,
+      language: 'typescript',
       tags: ['report', 'ts', 'test'],
       code: `
         @Get()
@@ -73,8 +72,8 @@ export function App(): JSX.Element {
     },
     {
       id: 5,
-      href: 'https://ant.design',
       title: `ParseHTMLSource.ts`,
+      language: 'typescript',
       tags: ['HTML', 'ts', 'parser'],
       code: `
         @Put(':id')
@@ -84,8 +83,8 @@ export function App(): JSX.Element {
     },
     {
       id: 6,
-      href: 'https://ant.design',
       title: `GetEveryCount.ts`,
+      language: 'typescript',
       tags: ['count', 'ts'],
       code: `
         @Get()
@@ -96,8 +95,8 @@ export function App(): JSX.Element {
     },
     {
       id: 7,
-      href: 'https://ant.design',
       title: `SimulateUploadCount.ts`,
+      language: 'typescript',
       tags: ['count', 'ts', 'upload'],
       code: `
         @Put(':id')
@@ -107,8 +106,8 @@ export function App(): JSX.Element {
     },
     {
       id: 8,
-      href: 'https://ant.design',
       title: `AdapterUserScoreTest.ts`,
+      language: 'typescript',
       tags: ['adapter', 'ts', 'test'],
       code: `
         @Get()
@@ -119,8 +118,8 @@ export function App(): JSX.Element {
     },
     {
       id: 9,
-      href: 'https://ant.design',
       title: `AdapterReportCsvCounterData.js`,
+      language: 'typescript',
       tags: ['adapter', 'js', 'test'],
       code: `
         @Put(':id')
@@ -130,8 +129,8 @@ export function App(): JSX.Element {
     },
     {
       id: 10,
-      href: 'https://ant.design',
       title: `TestUserRating.ts`,
+      language: 'typescript',
       tags: ['adapter', 'js'],
       code: `
         @Get()
@@ -142,8 +141,8 @@ export function App(): JSX.Element {
     },
     {
       id: 11,
-      href: 'https://ant.design',
       title: `IntegrationDtoDescription.ts`,
+      language: 'typescript',
       tags: ['js'],
       code: `
         @Put(':id')
@@ -153,8 +152,8 @@ export function App(): JSX.Element {
     },
     {
       id: 12,
-      href: 'https://ant.design',
       title: `ScoreCsvCounter.ts`,
+      language: 'typescript',
       tags: ['user', 'test'],
       code: `
         @Get()
@@ -165,8 +164,8 @@ export function App(): JSX.Element {
     },
     {
       id: 13,
-      href: 'https://ant.design',
       title: `AnswerUsersCount.ts`,
+      language: 'typescript',
       tags: ['user', 'js'],
       code: `
         @Put(':id')
@@ -176,8 +175,8 @@ export function App(): JSX.Element {
     },
     {
       id: 14,
-      href: 'https://ant.design',
       title: `UsersFriendsCount.ts`,
+      language: 'typescript',
       tags: ['adapter', 'ts'],
       code: `
         @Put(':id')
@@ -187,8 +186,8 @@ export function App(): JSX.Element {
     },
     {
       id: 15,
-      href: 'https://ant.design',
       title: `UsersFunctionsDtoCount.ts`,
+      language: 'typescript',
       tags: ['test'],
       code: `
         @Get()
@@ -199,8 +198,8 @@ export function App(): JSX.Element {
     },
     {
       id: 16,
-      href: 'https://ant.design',
       title: `Main.ts`,
+      language: 'typescript',
       tags: ['js'],
       code: `
         @Put(':id')
@@ -210,8 +209,8 @@ export function App(): JSX.Element {
     },
     {
       id: 17,
-      href: 'https://ant.design',
       title: `CreateNewDtoUser.ts`,
+      language: 'typescript',
       tags: ['user'],
       code: `
         @Get()
@@ -222,8 +221,8 @@ export function App(): JSX.Element {
     },
     {
       id: 18,
-      href: 'https://ant.design',
       title: `CreateUserFriend.ts`,
+      language: 'typescript',
       tags: ['adapter'],
       code: `
         @Put(':id')
@@ -233,8 +232,8 @@ export function App(): JSX.Element {
     },
     {
       id: 19,
-      href: 'https://ant.design',
       title: `CreateDataFactory.ts`,
+      language: 'typescript',
       tags: ['test'],
       code: `
         @Get()
@@ -247,9 +246,14 @@ export function App(): JSX.Element {
 
   const [listDataFiltered, setListDataFiltered] = React.useState(listData);
 
+  const submitHandler = (data) => {
+    // TODO: send data to server
+    listData.push(data);
+    setListDataFiltered(listData);
+  };
+
   const onSearch = (event) => {
     const data = event.target.value;
-    console.log(data);
     if (data === '') {
       setListDataFiltered(listData);
     } else {
@@ -274,27 +278,28 @@ export function App(): JSX.Element {
 
   const colors = ['green', 'blue', 'red', 'cyan', 'magenta', 'geekblue'];
 
-  // For editor
-  const [isEditorReady, setIsEditorReady] = React.useState(false);
-  const valueGetter = React.useRef();
-  function handleEditorDidMount(_valueGetter) {
-    setIsEditorReady(true);
-    valueGetter.current = _valueGetter;
-  }
 
+  const [id, setId] = React.useState(0);
   const [code, setCode] = React.useState('');
   const [fileName, setFileName] = React.useState('');
+  const [language, setLanguage] = React.useState('');
 
   const linkHandle = (event) => {
+    setId(event.id);
     setFileName(event.title);
+    setLanguage(event.language);
     setCode(event.code);
   };
 
-  // TODO: Менять содержимое функций от ввода (правильные ref)
+  const onChangeEditor = (event) => {
+    // TODO: Ужасающий костыль
+    listData.filter((x) => x.id === id)[0].code = event;
+    listDataFiltered.filter((x) => x.id === id)[0].code = event;
+  };
 
   return (
     <div className="App">
-      <Header onSearch={onSearch} />
+      <Header onSearch={onSearch} submitHandler={submitHandler} />
       <Row className="Body" justify="space-around" align="top">
         <Col span={8}>
           <List
@@ -338,7 +343,8 @@ export function App(): JSX.Element {
             <CodeEditor
               name={fileName}
               code={code}
-              editorHandler={handleEditorDidMount}
+              language={language}
+              onChangeEditor={onChangeEditor}
             />
           )}
           {fileName === '' ? (

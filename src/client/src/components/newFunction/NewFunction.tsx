@@ -5,14 +5,10 @@ import { EditableTagGroup } from '../tagsEditor/TagsEditor';
 
 const { Option } = Select;
 
-export const NewFunction = (): JSX.Element => {
+export const NewFunction = ({ submitHandler }): JSX.Element => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    console.log(values);
-  };
-
-  const [tags, setTags] = React.useState(['js']);
+  const [tags, setTags] = React.useState([]);
 
   const languages = [
     'javascript',
@@ -24,8 +20,8 @@ export const NewFunction = (): JSX.Element => {
   ];
 
   return (
-    <Form form={form} name="control-hooks" onFinish={onFinish}>
-      <Form.Item name="name" label="Имя функции" rules={[{ required: true }]}>
+    <Form form={form} name="control-hooks" onFinish={submitHandler}>
+      <Form.Item name="title" label="Имя функции" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
       <Form.Item

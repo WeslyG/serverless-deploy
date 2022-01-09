@@ -3,7 +3,7 @@ import { Button, Col, Input, Modal, Row } from 'antd';
 import React, { useState } from 'react';
 import { NewFunction } from '../newFunction/NewFunction';
 
-export const Header = ({ onSearch }): JSX.Element => {
+export const Header = ({ onSearch, submitHandler }): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -66,7 +66,7 @@ export const Header = ({ onSearch }): JSX.Element => {
           width={600}
           footer={[]}
         >
-          <NewFunction />
+          <NewFunction submitHandler={submitHandler} />
         </Modal>
       </Col>
     </Row>
