@@ -1,17 +1,19 @@
 import React from 'react';
 import { Button, message } from 'antd';
 
-export const DeployButtons = () => {
+export const DeployButtons = ({ fileName }) => {
   const [isLoading3, setIsLoading3] = React.useState(false);
   const [isLoading1, setIsLoading1] = React.useState(false);
   const [isLoading2, setIsLoading2] = React.useState(false);
 
   const success = () => {
-    message.success('Success deploy!');
+    message.success(`Успешный деплой функции ${fileName}`);
   };
 
   const error = () => {
-    message.error('On deploy has errors, please see console for detail');
+    message.error(
+      `При деплое функции ${fileName} произошла ошибка, посмотрите консоль`,
+    );
   };
 
   return (

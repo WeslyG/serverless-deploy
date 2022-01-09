@@ -1,23 +1,15 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Input, Modal, Row } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 import { NewFunction } from '../newFunction/NewFunction';
 
-export const Header = ({ onSearch, submitHandler }): JSX.Element => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
+export const Header = ({
+  onSearch,
+  showModal,
+  isModalVisible,
+  handleCancel,
+  submitHandler,
+}): JSX.Element => {
   return (
     <Row
       className="Header"

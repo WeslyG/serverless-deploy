@@ -28,13 +28,29 @@ import { CodeEditor } from './components/editor/Editor';
 import { DeployButtons } from './components/deploy/DeployButtons';
 import { EditButtons } from './components/edit/EditButton';
 
+export type ListDataType = {
+  id: number;
+  title: string;
+  language: string;
+  tags?: string[];
+  code: string;
+};
+
 export function App(): JSX.Element {
-  const listData = [
-    // {
-    //   id: 1,
-    //   title: `VeryVeeeeryLongFunctionNameAsExampleForJavaFunctionNamesAndTestMyUiExperience.js`,
-    //   tags: ['user', 'js', 'test'],
-    // },
+  // title: `VeryVeeeeryLongFunctionNameAsExampleForJavaFunctionNamesAndTestMyUiExperience.js`,
+  const listData: ListDataType[] = [
+    {
+      id: 1,
+      language: 'typescript',
+      title: `LongFileName.js`,
+      tags: ['user', 'js', 'test'],
+      code: `
+        @Get()
+        getAll() {
+          return this.fnService.getAllFn();
+        }
+      `,
+    },
     {
       id: 2,
       title: `ReportBuilder.ts`,
@@ -246,10 +262,25 @@ export function App(): JSX.Element {
 
   const [listDataFiltered, setListDataFiltered] = React.useState(listData);
 
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const submitHandler = (data) => {
     // TODO: send data to server
+    // TODO: тут все сломается если будет удаление
+    data.id = listData.length + 1;
     listData.push(data);
     setListDataFiltered(listData);
+    handleCancel();
+    message.success(`Функция ${data.title} успешно создана!`);
+    linkHandle(data);
   };
 
   const onSearch = (event) => {
@@ -278,13 +309,14 @@ export function App(): JSX.Element {
 
   const colors = ['green', 'blue', 'red', 'cyan', 'magenta', 'geekblue'];
 
-
   const [id, setId] = React.useState(0);
   const [code, setCode] = React.useState('');
   const [fileName, setFileName] = React.useState('');
   const [language, setLanguage] = React.useState('');
+  const [data, setData] = React.useState({});
 
   const linkHandle = (event) => {
+    setData(event);
     setId(event.id);
     setFileName(event.title);
     setLanguage(event.language);
@@ -293,13 +325,20 @@ export function App(): JSX.Element {
 
   const onChangeEditor = (event) => {
     // TODO: Ужасающий костыль
+    // console.log(listData.filter((x) => x.id === id));
     listData.filter((x) => x.id === id)[0].code = event;
     listDataFiltered.filter((x) => x.id === id)[0].code = event;
   };
 
   return (
     <div className="App">
-      <Header onSearch={onSearch} submitHandler={submitHandler} />
+      <Header
+        onSearch={onSearch}
+        submitHandler={submitHandler}
+        showModal={showModal}
+        isModalVisible={isModalVisible}
+        handleCancel={handleCancel}
+      />
       <Row className="Body" justify="space-around" align="top">
         <Col span={8}>
           <List
@@ -323,7 +362,7 @@ export function App(): JSX.Element {
                     </Button>
                   }
                 />
-                {item.tags.map((x) => {
+                {item.tags?.map((x) => {
                   return <Tag color={choose(x)}>{x}</Tag>;
                 })}
               </List.Item>
@@ -351,8 +390,8 @@ export function App(): JSX.Element {
             <></>
           ) : (
             <div>
-              <EditButtons />
-              <DeployButtons />
+              <EditButtons data={data} />
+              <DeployButtons fileName={fileName} />
             </div>
           )}
         </Col>
