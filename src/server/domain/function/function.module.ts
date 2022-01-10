@@ -1,7 +1,7 @@
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { DbModule } from '../../infra/db/db.module';
-import { FunctionEntity } from './entities/function.entity';
+import { ProviderEntity } from './entities/function.entity';
 import { FunctionController } from './function.controller';
 import { FunctionService } from './function.service';
 
@@ -9,7 +9,7 @@ import { FunctionService } from './function.service';
   imports: [
     DbModule,
     MikroOrmModule.forFeature({
-      entities: [FunctionEntity],
+      entities: [ProviderEntity],
     }),
   ],
   controllers: [FunctionController],

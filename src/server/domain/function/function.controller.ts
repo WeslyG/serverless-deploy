@@ -37,4 +37,12 @@ export class FunctionController {
   deleteFn(@Param() id: string) {
     return this.fnService.deleteFn(id);
   }
+
+  @Post(':id/deploy/:providerId')
+  deployFn(@Param() id: string, @Param() providerId: string) {
+    return {
+      id,
+      providerId,
+    };
+  }
 }
