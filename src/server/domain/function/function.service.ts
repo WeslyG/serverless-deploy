@@ -21,7 +21,7 @@ export class FunctionService {
     return await this.funcRepository.findAll();
   }
 
-  async getOneFn(id: string) {
+  async getOneFn(id: { id: string }) {
     return await this.funcRepository.findOne(id);
   }
 
@@ -31,7 +31,7 @@ export class FunctionService {
   }
 
   // FunctionDTO
-  async updateFn(id: string, body: Partial<FunctionCreation>) {
+  async updateFn(id: { id: string }, body: Partial<FunctionCreation>) {
     const currentFn = await this.funcRepository.findOne(id);
     if (!currentFn) throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
 
@@ -50,7 +50,7 @@ export class FunctionService {
     return this.funcRepository.persistAndFlush(currentFn);
   }
 
-  async deleteFn(id: string) {
+  async deleteFn(id: { id: string }) {
     const forDelete = await this.funcRepository.findOne(id);
     if (!forDelete)
       throw new HttpException('Delete id not found', HttpStatus.NOT_FOUND);

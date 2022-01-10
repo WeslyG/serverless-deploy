@@ -1,19 +1,17 @@
-import { Options } from '@mikro-orm/core';
 import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ProviderEntity } from '../../domain/function/entities/function.entity';
+import { MongoConnect } from './MongoConnect';
 
-const config = {
-  entities: [ProviderEntity],
-  dbName: 'urfu-prj',
-  type: 'mongo',
-  port: 27017,
-  debug: true,
-  // highlighter: new SqlHighlighter(),
-  // logger: logger.log.bind(logger),
-} as Options;
-
+export const entities = [ProviderEntity];
 @Module({
-  imports: [MikroOrmModule.forRoot(config)],
+  imports: [
+    MikroOrmModule.forRootAsync({
+      providers: [MongoConnect],
+      inject: [MongoConnect],
+      useFactory: async (connection: MongoConnect) =>
+        await connection.getConfig(),
+    }),
+  ],
 })
 export class DbModule {}

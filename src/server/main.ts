@@ -7,6 +7,8 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
   const port = 3005;
+  app.enableShutdownHooks();
+
   await app.listen(port);
   logger.log(`Server started ${port} port`);
 }

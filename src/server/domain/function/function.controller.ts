@@ -19,7 +19,7 @@ export class FunctionController {
   }
 
   @Get(':id')
-  getOne(@Param() id: string) {
+  getOne(@Param() id: { id: string }) {
     return this.fnService.getOneFn(id);
   }
 
@@ -29,17 +29,20 @@ export class FunctionController {
   }
 
   @Put(':id')
-  updateFn(@Param() id: string, @Body() body: any) {
+  updateFn(@Param() id: { id: string }, @Body() body: any) {
     return this.fnService.updateFn(id, body);
   }
 
   @Delete(':id')
-  deleteFn(@Param() id: string) {
+  deleteFn(@Param() id: { id: string }) {
     return this.fnService.deleteFn(id);
   }
 
   @Post(':id/deploy/:providerId')
-  deployFn(@Param() id: string, @Param() providerId: string) {
+  deployFn(
+    @Param() id: { id: string },
+    @Param() providerId: { providerId: string },
+  ) {
     return {
       id,
       providerId,
