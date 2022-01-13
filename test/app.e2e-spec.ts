@@ -69,23 +69,19 @@ describe('AppController (e2e)', () => {
       .expect(201);
   });
 
-  it('/function Get list with one element', () => {
-    return request(app.getHttpServer())
-      .get('/function')
-      .expect(200)
-      .end((err, res) => {
-        expect(res.body).toEqual(
-          expect.objectContaining([
-            {
-              id: expect.any(String),
-              createdAt: expect.any(String),
-              updatedAt: expect.any(String),
-              tags: null,
-              ...Sample1,
-            },
-          ]),
-        );
-      });
+  it('/function Get list with one element', async () => {
+    const res = await request(app.getHttpServer()).get('/function').expect(200);
+    expect(res.body).toEqual(
+      expect.objectContaining([
+        {
+          id: expect.any(String),
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+          tags: null,
+          ...Sample1,
+        },
+      ]),
+    );
   });
 
   afterEach(async () => {
