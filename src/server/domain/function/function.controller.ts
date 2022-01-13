@@ -7,11 +7,18 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { DeployService } from './deploy.service';
+import { FunctionCreationDTO } from './dto/function.dto';
 import { FunctionService } from './function.service';
 
+@ApiTags('Function')
 @Controller('function')
 export class FunctionController {
-  constructor(private readonly fnService: FunctionService) {}
+  constructor(
+    private readonly fnService: FunctionService,
+    private readonly deployService: DeployService,
+  ) {}
 
   @Get()
   getAll() {
@@ -24,7 +31,7 @@ export class FunctionController {
   }
 
   @Post()
-  createFn(@Body() body: any) {
+  createFn(@Body() body: FunctionCreationDTO): Promise<void> {
     return this.fnService.createFn(body);
   }
 
@@ -38,14 +45,18 @@ export class FunctionController {
     return this.fnService.deleteFn(id);
   }
 
-  @Post(':id/deploy/:providerId')
-  deployFn(
-    @Param() id: { id: string },
-    @Param() providerId: { providerId: string },
-  ) {
-    return {
-      id,
-      providerId,
-    };
+  @Post(':id/deploy/1')
+  deploySberCloud(@Param() id: { id: string }) {
+    return this.deployService.deployToSberCloud(id);
+  }
+
+  @Post(':id/deploy/2')
+  deployToYandexCloud(@Param() id: { id: string }) {
+    return this.deployService.deployToYandexCloud(id);
+  }
+
+  @Post(':id/deploy/3')
+  deployToSelectel(@Param() id: { id: string }) {
+    return this.deployService.deployToSelectel(id);
   }
 }

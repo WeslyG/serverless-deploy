@@ -5,7 +5,9 @@ import {
   HttpStatus,
   Param,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Provider')
 @Controller('provider')
 export class ProviderController {
   private providers = [

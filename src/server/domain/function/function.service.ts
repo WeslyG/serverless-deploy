@@ -1,6 +1,7 @@
 import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { FunctionCreationDTO } from './dto/function.dto';
 import { ProviderEntity } from './entities/function.entity';
 
 export type FunctionCreation = {
@@ -25,13 +26,13 @@ export class FunctionService {
     return await this.funcRepository.findOne(id);
   }
 
-  createFn(body: FunctionCreation) {
+  async createFn(body: FunctionCreationDTO) {
     const fnEntity = new ProviderEntity(body);
-    return this.funcRepository.persistAndFlush(fnEntity);
+    return await this.funcRepository.persistAndFlush(fnEntity);
   }
 
   // FunctionDTO
-  async updateFn(id: { id: string }, body: Partial<FunctionCreation>) {
+  async updateFn(id: { id: string }, body: Partial<FunctionCreationDTO>) {
     const currentFn = await this.funcRepository.findOne(id);
     if (!currentFn) throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
 
