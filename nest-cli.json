@@ -1,4 +1,14 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src/server"
+  "sourceRoot": "src/server",
+	"compilerOptions": {
+		"plugins": [
+			{
+				"name": "@nestjs/swagger/plugin",
+				"options": {
+					"classValidatorShim": true
+				}
+			}
+		]
+	}
 }
