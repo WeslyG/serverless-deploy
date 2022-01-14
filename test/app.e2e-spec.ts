@@ -4,12 +4,17 @@ import request from 'supertest';
 import { AppModule } from '../src/server/app.module';
 import { MongoConnect } from '../src/server/infra/db/MongoConnect';
 import { MongoConnectTest } from '../src/server/infra/db/MongoConnectTest';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
+  let mongoServer: MongoMemoryServer;
+  let url: string;
 
   beforeAll(async () => {
     // Удалить все из базы
+    mongoServer = await MongoMemoryServer.create();
+    url = mongoServer.getUri();
   });
 
   beforeEach(async () => {
@@ -22,6 +27,10 @@ describe('AppController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
+  });
+
+  afterEach(async () => {
+    await app.close();
   });
 
   it('/provider', () => {
@@ -82,9 +91,5 @@ describe('AppController (e2e)', () => {
         },
       ]),
     );
-  });
-
-  afterEach(async () => {
-    await app.close();
   });
 });

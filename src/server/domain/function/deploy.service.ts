@@ -1,7 +1,7 @@
 import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
-import { SelectelClient } from '../clients/selectel/client';
+import { SelectelClient } from '../../clients/selectel/client';
 import { ProviderEntity } from './entities/function.entity';
 
 @Injectable()
@@ -14,18 +14,18 @@ export class DeployService {
   }
   selectelClient: SelectelClient;
 
-  async deployToSelectel(id: { id: string }): Promise<any> {
+  async deployToSelectel(id: string): Promise<any> {
     const func = await this.funcRepository.findOne(id);
     // return await this.selectelClient.create(func);
     return true;
   }
 
-  async deployToYandexCloud(id: { id: string }): Promise<any> {
+  async deployToYandexCloud(id: string): Promise<any> {
     const func = await this.funcRepository.findOne(id);
     return true;
   }
 
-  async deployToSberCloud(id: { id: string }): Promise<any> {
+  async deployToSberCloud(id: string): Promise<any> {
     const func = await this.funcRepository.findOne(id);
     return true;
   }

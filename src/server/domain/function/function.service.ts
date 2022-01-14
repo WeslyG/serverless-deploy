@@ -1,7 +1,8 @@
 import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { FunctionCreationDTO } from './dto/function.dto';
+import { FunctionCreateDTO } from './dto/function.create.dto';
+import { FunctionGetDTO } from './dto/function.get.dto';
 import { ProviderEntity } from './entities/function.entity';
 
 export type FunctionCreation = {
@@ -18,21 +19,32 @@ export class FunctionService {
     private readonly funcRepository: EntityRepository<ProviderEntity>,
   ) {}
 
-  async getAllFn() {
-    return await this.funcRepository.findAll();
+  async getAllFn(): Promise<FunctionGetDTO[]> {
+    const res = await this.funcRepository.findAll();
+    return res.map(
+      i =>
+        new FunctionGetDTO({
+          id: i.id,
+          ...i,
+        }),
+    );
   }
 
-  async getOneFn(id: { id: string }) {
-    return await this.funcRepository.findOne(id);
+  async getOneFn(id: string): Promise<FunctionGetDTO> {
+    const res = await this.funcRepository.findOne(id);
+    return new FunctionGetDTO({
+      id: res.id,
+      ...res,
+    });
   }
 
-  async createFn(body: FunctionCreationDTO) {
+  createFn(body: FunctionCreateDTO): Promise<void> {
     const fnEntity = new ProviderEntity(body);
-    return await this.funcRepository.persistAndFlush(fnEntity);
+    return this.funcRepository.persistAndFlush(fnEntity);
   }
 
   // FunctionDTO
-  async updateFn(id: { id: string }, body: Partial<FunctionCreationDTO>) {
+  async updateFn(id: string, body: Partial<FunctionCreateDTO>) {
     const currentFn = await this.funcRepository.findOne(id);
     if (!currentFn) throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
 
@@ -51,10 +63,9 @@ export class FunctionService {
     return this.funcRepository.persistAndFlush(currentFn);
   }
 
-  async deleteFn(id: { id: string }) {
+  async deleteFn(id: string) {
     const forDelete = await this.funcRepository.findOne(id);
-    if (!forDelete)
-      throw new HttpException('Delete id not found', HttpStatus.NOT_FOUND);
+    if (!forDelete) throw new HttpException('Delete id not found', HttpStatus.NOT_FOUND);
     return this.funcRepository.removeAndFlush(forDelete);
   }
 }

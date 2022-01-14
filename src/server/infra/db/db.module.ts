@@ -9,8 +9,7 @@ export const entities = [ProviderEntity];
     MikroOrmModule.forRootAsync({
       providers: [MongoConnect],
       inject: [MongoConnect],
-      useFactory: async (connection: MongoConnect) =>
-        await connection.getConfig(),
+      useFactory: (connection: MongoConnect) => connection.getConfig(),
     }),
   ],
 })

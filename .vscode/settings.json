@@ -1,11 +1,15 @@
 {
-  "cSpell.words": [
-    "Sber",
-    "Selectel"
-  ]
-}
-    "Mikro",
-    "urfu"
-  ]
-}
+  "cSpell.words": ["Sber", "Selectel", "Mikro", "urfu"],
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[json][jsonc]": {
+    // "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[javascript][typescript]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": ["source.addMissingImports", "source.fixAll.eslint"]
+  }
 }

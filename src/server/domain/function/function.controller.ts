@@ -1,24 +1,13 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { DeployService } from './deploy.service';
-import { FunctionCreationDTO } from './dto/function.dto';
+import { FunctionCreateDTO } from './dto/function.create.dto';
 import { FunctionService } from './function.service';
 
 @ApiTags('Function')
 @Controller('function')
 export class FunctionController {
-  constructor(
-    private readonly fnService: FunctionService,
-    private readonly deployService: DeployService,
-  ) {}
+  constructor(private readonly fnService: FunctionService, private readonly deployService: DeployService) {}
 
   @Get()
   getAll() {
@@ -26,37 +15,37 @@ export class FunctionController {
   }
 
   @Get(':id')
-  getOne(@Param() id: { id: string }) {
+  getOne(@Param('id') id: string) {
     return this.fnService.getOneFn(id);
   }
 
   @Post()
-  createFn(@Body() body: FunctionCreationDTO): Promise<void> {
+  createFn(@Body() body: FunctionCreateDTO): Promise<void> {
     return this.fnService.createFn(body);
   }
 
   @Put(':id')
-  updateFn(@Param() id: { id: string }, @Body() body: any) {
+  updateFn(@Param('id') id: string, @Body() body: any) {
     return this.fnService.updateFn(id, body);
   }
 
   @Delete(':id')
-  deleteFn(@Param() id: { id: string }) {
+  deleteFn(@Param('id') id: string) {
     return this.fnService.deleteFn(id);
   }
 
   @Post(':id/deploy/1')
-  deploySberCloud(@Param() id: { id: string }) {
+  deploySberCloud(@Param('id') id: string) {
     return this.deployService.deployToSberCloud(id);
   }
 
   @Post(':id/deploy/2')
-  deployToYandexCloud(@Param() id: { id: string }) {
+  deployToYandexCloud(@Param('id') id: string) {
     return this.deployService.deployToYandexCloud(id);
   }
 
   @Post(':id/deploy/3')
-  deployToSelectel(@Param() id: { id: string }) {
+  deployToSelectel(@Param('id') id: string) {
     return this.deployService.deployToSelectel(id);
   }
 }

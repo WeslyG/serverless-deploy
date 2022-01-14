@@ -6,7 +6,7 @@ export interface IMongoConnect {
 }
 
 export class MongoConnect implements IMongoConnect {
-  async getConfig(): Promise<Options> {
+  getConfig(): Promise<Options> {
     return Promise.resolve({
       entities,
       dbName: 'urfu-prj',

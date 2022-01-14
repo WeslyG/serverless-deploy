@@ -1,8 +1,4 @@
-import {
-  ClassSerializerInterceptor,
-  Logger,
-  ValidationPipe,
-} from '@nestjs/common';
+import { ClassSerializerInterceptor, Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { swaggerLoad } from './swagger';
@@ -24,9 +20,9 @@ async function bootstrap() {
       whitelist: true,
       transform: true,
       // https://stackoverflow.com/questions/59531427/why-should-we-not-use-enableimplicitconversion-when-using-class-transformer
-      // transformOptions: {
-      //   enableImplicitConversion: false,
-      // },
+      transformOptions: {
+        enableImplicitConversion: false,
+      },
     }),
   );
 
