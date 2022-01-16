@@ -1,6 +1,7 @@
 import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestErrors } from '../../common/errors/badRequest.errors';
 import { FunctionCreateDTO } from './dto/function.create.dto';
 import { FunctionGetDTO } from './dto/function.get.dto';
 import { FunctionEntity } from './entities/function.entity';
@@ -26,6 +27,7 @@ export class FunctionService {
 
   async getOneFn(id: string): Promise<FunctionGetDTO> {
     const res = await this.funcRepository.findOne(id);
+    if (!res) throw new BadRequestException(BadRequestErrors.idNotFound());
     return new FunctionGetDTO(res);
   }
 
@@ -38,7 +40,7 @@ export class FunctionService {
   // FunctionDTO
   async updateFn(id: string, body: Partial<FunctionCreateDTO>): Promise<FunctionGetDTO> {
     const currentFn = await this.funcRepository.findOne(id);
-    if (!currentFn) throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
+    if (!currentFn) throw new BadRequestException(BadRequestErrors.idNotFound());
 
     if (body.title) {
       currentFn.title = body.title;
@@ -58,7 +60,7 @@ export class FunctionService {
 
   async deleteFn(id: string): Promise<FunctionGetDTO> {
     const forDelete = await this.funcRepository.findOne(id);
-    if (!forDelete) throw new HttpException('Delete id not found', HttpStatus.NOT_FOUND);
+    if (!forDelete) throw new BadRequestException(BadRequestErrors.idNotFound());
     await this.funcRepository.removeAndFlush(forDelete);
     return new FunctionGetDTO(forDelete);
   }

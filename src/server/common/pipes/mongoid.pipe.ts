@@ -8,7 +8,7 @@ export class MongoIdParse implements PipeTransform<any> {
     const validMongoId = isMongoId(id);
 
     if (!validMongoId) {
-      throw new BadRequestException(BadRequestErrors.idNotValid(id));
+      throw new BadRequestException(BadRequestErrors.idNotValid());
     }
 
     return id;

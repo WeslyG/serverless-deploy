@@ -1,35 +1,44 @@
+import { HttpStatus } from '@nestjs/common';
 import { BaseErrorDto } from './base.error.dto';
 
 export class BadRequestErrors {
-  static noUniqField(field: string) {
-    return new BaseErrorDto(400, `${field} already exist, and must be unique`, 'NoUniqField');
+  static noUniqField(field?: string | undefined) {
+    return new BaseErrorDto(
+      HttpStatus.BAD_REQUEST,
+      field ? `${field} must be unique` : 'Field must be unique',
+      'NoUniqueField',
+    );
   }
 
-  static notFound(message: string) {
-    return new BaseErrorDto(404, message, 'NotFound');
+  static notFound(message?: string | undefined) {
+    return new BaseErrorDto(HttpStatus.NOT_FOUND, message ?? 'Not found', 'NotFound');
   }
 
-  static idNotValid(id: string) {
-    return new BaseErrorDto(400, `Id = ${id} is not valid`, 'IdNotValid');
+  static idNotValid(id?: string | undefined) {
+    return new BaseErrorDto(HttpStatus.BAD_REQUEST, id ? `Id = ${id} not found` : 'Id not valid', 'IdNotValid');
   }
 
-  static idNotFound(id: string) {
-    return new BaseErrorDto(404, `Id = ${id} notFound`, 'IdNotFound');
+  static idNotFound(id?: string | undefined) {
+    return new BaseErrorDto(HttpStatus.NOT_FOUND, id ? `id = ${id} not found` : 'Id not found', 'IdNotFound');
   }
 
-  static idNotValidUuid(id: string) {
-    return new BaseErrorDto(400, `Id = ${id} is not valid uuid v4 string`, 'IdNotValidUuidV4');
+  static idNotValidUuid(value?: string | undefined) {
+    return new BaseErrorDto(
+      HttpStatus.BAD_REQUEST,
+      value ? `${value} is not valid uuidV4` : 'Not valid Uuuid v4',
+      'NotValidUuidV4',
+    );
   }
 
-  static forbidden(message: string) {
-    return new BaseErrorDto(403, message, 'Forbidden');
+  static forbidden(message?: string | undefined) {
+    return new BaseErrorDto(HttpStatus.FORBIDDEN, message ?? 'Forbidden', 'Forbidden');
   }
 
-  static unauthorize(message: string) {
-    return new BaseErrorDto(401, message, 'Unauthorize');
+  static unauthorize(message?: string | undefined) {
+    return new BaseErrorDto(HttpStatus.UNAUTHORIZED, message ?? 'Unauthorize', 'Unauthorize');
   }
 
-  static badRequest(message: string) {
-    return new BaseErrorDto(400, message, 'BadRequest');
+  static badRequest(message?: string | undefined) {
+    return new BaseErrorDto(HttpStatus.BAD_REQUEST, message ?? 'BadRequest', 'BadRequest');
   }
 }

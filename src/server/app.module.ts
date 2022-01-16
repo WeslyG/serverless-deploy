@@ -4,6 +4,6 @@ import { ProviderModule } from './domain/provider/provider.module';
 import { DbModule } from './infra/db/db.module';
 
 @Module({
-  imports: [FunctionModule, ProviderModule, DbModule],
+  imports: [DbModule, FunctionModule, ProviderModule],
 })
 export class AppModule {}

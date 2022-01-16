@@ -10,8 +10,8 @@ export class MongoConnect implements IMongoConnect {
     return Promise.resolve({
       entities,
       dbName: 'urfu-prj',
+      clientUrl: 'mongodb://127.0.0.1:27017',
       type: 'mongo',
-      port: 27017,
       debug: true,
       // highlighter: new SqlHighlighter(),
       // logger: logger.log.bind(logger),

@@ -1,3 +1,4 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class BaseErrorDto {
@@ -22,9 +23,18 @@ export class BaseErrorDto {
   })
   errorCategory: string;
 
-  constructor(statusCode: number, message: string, errorCategory: string) {
+  constructor(statusCode: HttpStatus, message: string, errorCategory: string) {
     this.statusCode = statusCode;
     this.message = message;
     this.errorCategory = errorCategory;
+
+    throw new HttpException(
+      {
+        message: this.message,
+        errorCategory: this.errorCategory,
+        httpStatus: this.statusCode,
+      },
+      this.statusCode,
+    );
   }
 }
