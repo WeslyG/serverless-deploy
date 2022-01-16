@@ -17,8 +17,8 @@ export class EditableTagGroup extends React.Component<PropsEditableTagGroup> {
     inputValue: '',
   };
 
-  handleClose = (removedTag) => {
-    const tags = this.state.tags.filter((tag) => tag !== removedTag);
+  handleClose = removedTag => {
+    const tags = this.state.tags.filter(tag => tag !== removedTag);
     this.setState({ tags });
     this.props.onChange(tags);
   };
@@ -27,7 +27,7 @@ export class EditableTagGroup extends React.Component<PropsEditableTagGroup> {
     this.setState({ inputVisible: true }, () => this.input.focus());
   };
 
-  handleInputChange = (e) => {
+  handleInputChange = e => {
     this.setState({ inputValue: e.target.value });
   };
 
@@ -45,15 +45,15 @@ export class EditableTagGroup extends React.Component<PropsEditableTagGroup> {
     this.props.onChange(tags);
   };
 
-  saveInputRef = (input) => {
+  saveInputRef = input => {
     this.input = input;
   };
 
-  forMap = (tag) => {
+  forMap = tag => {
     const tagElem = (
       <Tag
         closable
-        onClose={(e) => {
+        onClose={e => {
           e.preventDefault();
           this.handleClose(tag);
         }}
@@ -81,7 +81,7 @@ export class EditableTagGroup extends React.Component<PropsEditableTagGroup> {
               type: 'from',
               duration: 100,
             }}
-            onEnd={(e) => {
+            onEnd={e => {
               if (e.type === 'appear' || e.type === 'enter') {
                 e.target.style = 'display: inline-block';
               }

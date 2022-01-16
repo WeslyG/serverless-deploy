@@ -7,7 +7,8 @@
           "version": "3",
           "proposals": true
         },
-        "useBuiltIns": "usage"
+        "useBuiltIns": "usage",
+        "loose": true
       }
     ],
     "@babel/preset-typescript",
@@ -25,6 +26,7 @@
       {
         "loose": true
       }
-    ]
+    ],
+    "react-hot-loader/babel"
   ]
 }

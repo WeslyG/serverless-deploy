@@ -11,16 +11,11 @@ export const DeployButtons = ({ fileName }) => {
   };
 
   const error = () => {
-    message.error(
-      `При деплое функции ${fileName} произошла ошибка, посмотрите консоль`,
-    );
+    message.error(`При деплое функции ${fileName} произошла ошибка, посмотрите консоль`);
   };
 
   return (
-    <div
-      className="deploy-buttons-group"
-      style={{ margin: '10px', display: 'inline-block' }}
-    >
+    <div className="deploy-buttons-group" style={{ margin: '10px', display: 'inline-block' }}>
       <Button
         style={{ margin: '10px' }}
         type="primary"

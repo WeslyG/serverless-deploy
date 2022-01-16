@@ -47,6 +47,7 @@
     "@babel/preset-env": "^7.16.8",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
+    "@hot-loader/react-dom": "^17.0.1",
     "@lukaskl/monaco-editor-react": "^3.7.4",
     "@monaco-editor/react": "^4.3.1",
     "@nestjs/cli": "^8.2.0",
@@ -58,6 +59,7 @@
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "@types/supertest": "^2.0.11",
+    "@types/webpack-env": "^1.16.3",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
     "antd": "^4.18.3",
@@ -66,8 +68,8 @@
     "css-loader": "^6.5.1",
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.4.7",
@@ -76,6 +78,7 @@
     "rc-tween-one": "^3.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hot-loader": "^4.13.0",
     "react-router": "^6.2.1",
     "source-map-support": "^0.5.21",
     "style-loader": "^3.3.1",
@@ -107,7 +110,7 @@
     "testEnvironment": "node"
   },
   "volta": {
-    "node": "16.13.1",
+    "node": "16.13.2",
     "yarn": "1.22.17"
   }
 }

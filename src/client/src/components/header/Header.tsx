@@ -3,13 +3,7 @@ import { Button, Col, Input, Modal, Row } from 'antd';
 import React from 'react';
 import { NewFunction } from '../newFunction/NewFunction';
 
-export const Header = ({
-  onSearch,
-  showModal,
-  isModalVisible,
-  handleCancel,
-  submitHandler,
-}): JSX.Element => {
+export const Header = ({ onSearch, showModal, isModalVisible, handleCancel, submitHandler }): JSX.Element => {
   return (
     <Row
       className="Header"
@@ -23,11 +17,7 @@ export const Header = ({
       }}
     >
       <Col span={4} offset={3}>
-        <Button
-          type="link"
-          href="/"
-          style={{ color: 'white', fontSize: '22px' }}
-        >
+        <Button type="link" href="/" style={{ color: 'white', fontSize: '22px' }}>
           Serverless deploy
         </Button>
       </Col>

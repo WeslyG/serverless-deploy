@@ -1,13 +1,13 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/client/src/index.tsx',
+  entry: ['react-hot-loader/patch', './src/client/src/index.tsx'],
   target: 'web',
   devServer: {
-    static: path.join(__dirname, 'dist'),
-    compress: true,
     port: 3000,
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -29,7 +29,9 @@ module.exports = {
     ],
   },
   resolve: {
+    modules: ['node_modules'],
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    alias: { 'react-dom': '@hot-loader/react-dom' },
   },
   output: {
     filename: 'bundle.js',

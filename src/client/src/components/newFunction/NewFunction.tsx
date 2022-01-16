@@ -10,38 +10,23 @@ export const NewFunction = ({ submitHandler }): JSX.Element => {
 
   const [tags, setTags] = React.useState([]);
 
-  const languages = [
-    'javascript',
-    'python',
-    'typescript',
-    'java',
-    'ruby',
-    'golang',
-  ];
+  const languages = ['javascript', 'python', 'typescript', 'java', 'ruby', 'golang'];
 
   return (
     <Form form={form} name="control-hooks" onFinish={submitHandler}>
       <Form.Item name="title" label="Имя функции" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
-      <Form.Item
-        name="language"
-        label="Язык программирования"
-        rules={[{ required: true }]}
-      >
+      <Form.Item name="language" label="Язык программирования" rules={[{ required: true }]}>
         <Select placeholder="Select your functions language">
-          {languages.map((x) => (
+          {languages.map(x => (
             <Option key={x} value={x}>
               {x}
             </Option>
           ))}
         </Select>
       </Form.Item>
-      <Form.Item
-        name="code"
-        label="Исходный код функции"
-        rules={[{ required: true }]}
-      >
+      <Form.Item name="code" label="Исходный код функции" rules={[{ required: true }]}>
         <TextArea style={{ height: 150 }} />
       </Form.Item>
       <Form.Item name="tags" label="Теги">

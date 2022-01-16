@@ -11,5 +11,10 @@
     // "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": ["source.addMissingImports", "source.fixAll.eslint"]
+  },
+  "[typescript-react][javascript-react][typescriptreact][javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+    // "editor.codeActionsOnSave": ["source.addMissingImports", "source.fixAll.eslint"]
   }
 }

@@ -1,26 +1,8 @@
 import React from 'react';
 // import './AppStyle.css';
-import {
-  Row,
-  Button,
-  DatePicker,
-  version,
-  Col,
-  Input,
-  Avatar,
-  List,
-  Space,
-  Tag,
-  Divider,
-  message,
-  Empty,
-} from 'antd';
-import {
-  LikeOutlined,
-  MessageOutlined,
-  StarOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { Row, Button, DatePicker, version, Col, Input, Avatar, List, Space, Tag, Divider, message, Empty } from 'antd';
+import { LikeOutlined, MessageOutlined, StarOutlined, UserOutlined } from '@ant-design/icons';
+import { hot } from 'react-hot-loader/root';
 
 import 'antd/dist/antd.css';
 import { Header } from './components/header/Header';
@@ -36,13 +18,13 @@ export type ListDataType = {
   code: string;
 };
 
-export function App(): JSX.Element {
+const App = (): JSX.Element => {
   // title: `VeryVeeeeryLongFunctionNameAsExampleForJavaFunctionNamesAndTestMyUiExperience.js`,
   const listData: ListDataType[] = [
     {
       id: 1,
       language: 'typescript',
-      title: `LongFileName.js`,
+      title: `FunctionAdapterTest.js`,
       tags: ['user', 'js', 'test'],
       code: `
         @Get()
@@ -272,7 +254,7 @@ export function App(): JSX.Element {
     setIsModalVisible(false);
   };
 
-  const submitHandler = (data) => {
+  const submitHandler = data => {
     // TODO: send data to server
     // TODO: тут все сломается если будет удаление
     data.id = listData.length + 1;
@@ -283,16 +265,15 @@ export function App(): JSX.Element {
     linkHandle(data);
   };
 
-  const onSearch = (event) => {
+  const onSearch = event => {
     const data = event.target.value;
     if (data === '') {
       setListDataFiltered(listData);
     } else {
       const res = listData.filter(
-        (x) =>
+        x =>
           x.title.toLowerCase().includes(data.toLowerCase()) ||
-          x.tags.filter((a) => a.toLowerCase().includes(data.toLowerCase()))
-            .length > 0,
+          x.tags.filter(a => a.toLowerCase().includes(data.toLowerCase())).length > 0,
       );
       setListDataFiltered(res);
     }
@@ -315,7 +296,7 @@ export function App(): JSX.Element {
   const [language, setLanguage] = React.useState('');
   const [data, setData] = React.useState({});
 
-  const linkHandle = (event) => {
+  const linkHandle = event => {
     setData(event);
     setId(event.id);
     setFileName(event.title);
@@ -323,11 +304,11 @@ export function App(): JSX.Element {
     setCode(event.code);
   };
 
-  const onChangeEditor = (event) => {
+  const onChangeEditor = event => {
     // TODO: Ужасающий костыль
     // console.log(listData.filter((x) => x.id === id));
-    listData.filter((x) => x.id === id)[0].code = event;
-    listDataFiltered.filter((x) => x.id === id)[0].code = event;
+    listData.filter(x => x.id === id)[0].code = event;
+    listDataFiltered.filter(x => x.id === id)[0].code = event;
   };
 
   return (
@@ -353,7 +334,7 @@ export function App(): JSX.Element {
             }}
             bordered
             dataSource={listDataFiltered}
-            renderItem={(item) => (
+            renderItem={item => (
               <List.Item key={item.id}>
                 <List.Item.Meta
                   title={
@@ -362,8 +343,12 @@ export function App(): JSX.Element {
                     </Button>
                   }
                 />
-                {item.tags?.map((x) => {
-                  return <Tag color={choose(x)}>{x}</Tag>;
+                {item.tags?.map(x => {
+                  return (
+                    <Tag color={choose(x)} key={x}>
+                      {x}
+                    </Tag>
+                  );
                 })}
               </List.Item>
             )}
@@ -373,18 +358,10 @@ export function App(): JSX.Element {
         <Col span={15}>
           {fileName === '' ? (
             <Row justify="center" align="middle" style={{ height: '70vh' }}>
-              <Empty
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description={<span>Выберите функцию из списка слева</span>}
-              />
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={<span>Выберите функцию из списка слева</span>} />
             </Row>
           ) : (
-            <CodeEditor
-              name={fileName}
-              code={code}
-              language={language}
-              onChangeEditor={onChangeEditor}
-            />
+            <CodeEditor name={fileName} code={code} language={language} onChangeEditor={onChangeEditor} />
           )}
           {fileName === '' ? (
             <></>
@@ -398,4 +375,6 @@ export function App(): JSX.Element {
       </Row>
     </div>
   );
-}
+};
+
+export default module.hot ? hot(App) : App;
