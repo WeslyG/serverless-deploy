@@ -1,5 +1,6 @@
-import { Controller, Get, HttpException, HttpStatus, Param } from '@nestjs/common';
+import { BadRequestException, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { BadRequestErrors } from '../../common/errors/badRequest.errors';
 import { ProviderGetDTO } from './dto/provider.get.dto';
 
 @ApiTags('Provider')
@@ -26,10 +27,11 @@ export class ProviderController {
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string): ProviderGetDTO {
-    const res = this.providers.filter(x => x.id === parseInt(id));
+  getOne(@Param('id', ParseIntPipe) id: number): ProviderGetDTO {
+    const res = this.providers.filter(x => x.id === id);
     if (res.length > 0) {
-      return res[0];
+      if (res[0]) return res[0];
+      throw new BadRequestException(BadRequestErrors.idNotValid(id.toString()));
     } else {
       throw new HttpException('Provider id not found', HttpStatus.NOT_FOUND);
     }

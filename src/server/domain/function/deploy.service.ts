@@ -2,13 +2,13 @@ import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { SelectelClient } from '../../clients/selectel/client';
-import { ProviderEntity } from './entities/function.entity';
+import { FunctionEntity } from './entities/function.entity';
 
 @Injectable()
 export class DeployService {
   constructor(
-    @InjectRepository(ProviderEntity)
-    private readonly funcRepository: EntityRepository<ProviderEntity>,
+    @InjectRepository(FunctionEntity)
+    private readonly funcRepository: EntityRepository<FunctionEntity>,
   ) {
     this.selectelClient = new SelectelClient();
   }

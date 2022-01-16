@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { ProviderEntity } from '../../domain/function/entities/function.entity';
+import { FunctionEntity } from '../../domain/function/entities/function.entity';
 import { MongoConnect } from './MongoConnect';
 
-export const entities = [ProviderEntity];
+export const entities = [FunctionEntity];
 @Module({
   imports: [
     MikroOrmModule.forRootAsync({

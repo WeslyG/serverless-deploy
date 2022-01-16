@@ -3,7 +3,7 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { FunctionCreateDTO } from './dto/function.create.dto';
 import { FunctionGetDTO } from './dto/function.get.dto';
-import { ProviderEntity } from './entities/function.entity';
+import { FunctionEntity } from './entities/function.entity';
 
 export type FunctionCreation = {
   title: string;
@@ -15,36 +15,28 @@ export type FunctionCreation = {
 @Injectable()
 export class FunctionService {
   constructor(
-    @InjectRepository(ProviderEntity)
-    private readonly funcRepository: EntityRepository<ProviderEntity>,
+    @InjectRepository(FunctionEntity)
+    private readonly funcRepository: EntityRepository<FunctionEntity>,
   ) {}
 
   async getAllFn(): Promise<FunctionGetDTO[]> {
     const res = await this.funcRepository.findAll();
-    return res.map(
-      i =>
-        new FunctionGetDTO({
-          id: i.id,
-          ...i,
-        }),
-    );
+    return res.map(i => new FunctionGetDTO(i));
   }
 
   async getOneFn(id: string): Promise<FunctionGetDTO> {
     const res = await this.funcRepository.findOne(id);
-    return new FunctionGetDTO({
-      id: res.id,
-      ...res,
-    });
+    return new FunctionGetDTO(res);
   }
 
-  createFn(body: FunctionCreateDTO): Promise<void> {
-    const fnEntity = new ProviderEntity(body);
-    return this.funcRepository.persistAndFlush(fnEntity);
+  async createFn(body: FunctionCreateDTO): Promise<FunctionGetDTO> {
+    const fnEntity = new FunctionEntity(body);
+    await this.funcRepository.persistAndFlush(fnEntity);
+    return new FunctionCreateDTO(fnEntity);
   }
 
   // FunctionDTO
-  async updateFn(id: string, body: Partial<FunctionCreateDTO>) {
+  async updateFn(id: string, body: Partial<FunctionCreateDTO>): Promise<FunctionGetDTO> {
     const currentFn = await this.funcRepository.findOne(id);
     if (!currentFn) throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
 
@@ -60,12 +52,14 @@ export class FunctionService {
     if (body.language) {
       currentFn.language = body.language;
     }
-    return this.funcRepository.persistAndFlush(currentFn);
+    await this.funcRepository.persistAndFlush(currentFn);
+    return new FunctionGetDTO(currentFn);
   }
 
-  async deleteFn(id: string) {
+  async deleteFn(id: string): Promise<FunctionGetDTO> {
     const forDelete = await this.funcRepository.findOne(id);
     if (!forDelete) throw new HttpException('Delete id not found', HttpStatus.NOT_FOUND);
-    return this.funcRepository.removeAndFlush(forDelete);
+    await this.funcRepository.removeAndFlush(forDelete);
+    return new FunctionGetDTO(forDelete);
   }
 }

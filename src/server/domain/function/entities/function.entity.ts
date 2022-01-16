@@ -3,7 +3,7 @@ import { BaseEntity } from '../../../infra/db/BaseEntity';
 import { FunctionCreation } from '../function.service';
 
 @Entity()
-export class ProviderEntity extends BaseEntity {
+export class FunctionEntity extends BaseEntity {
   @Property()
   title!: string;
 
